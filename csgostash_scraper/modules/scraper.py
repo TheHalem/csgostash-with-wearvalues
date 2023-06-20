@@ -43,9 +43,11 @@ class ItemHasNoLore(ScraperException):
     """Exception that is thrown if the item has no lore"""
     pass
 
+
 class ItemHasNoDateAdded(ScraperException):
     """Exception that is thrown if the item has no date_added"""
     pass
+
 
 class ItemNoCollection(ScraperException):
     """Exception that is thrown if the item does not belong in a collection"""
@@ -282,6 +284,28 @@ class RetrieveWeaponSkin(RetrieveObject):
                 return result.text
         else:
             raise ItemNoStattrakSouvenir()
+
+    def get_wear_values(self):
+        """Returns a dictionary of possible skin wears
+
+        Dict Format: 
+        """
+        possible_wears = []
+
+        # Isolate elements related to the skin wear
+        div = self.parsed_page.find_all(
+            "div", {"class": "marker-value cursor-default"})
+
+        try:
+            min_wear = float(div[0].text)
+            max_wear = float(div[1].text)
+        except IndexError:
+            raise ItemHasNoWear()
+
+        possible_wears.append(min_wear)
+        possible_wears.append(max_wear)
+
+        return possible_wears
 
     def get_wears(self):
         """Returns a dictionary of possible skin wears

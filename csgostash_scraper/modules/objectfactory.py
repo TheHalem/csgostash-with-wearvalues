@@ -89,12 +89,17 @@ class ItemFactory(Factory):
         except ItemHasNoWear:
             wears = dict(vanilla=ws.get_image_url())
 
+        try:
+            wear_values = ws.get_wear_values()
+        except ItemHasNoWear:
+            wear_values = dict(vanilla=ws.get_image_url())
+
         get_rarity = ws.get_rarity()
         rarity = get_rarity.split(' ')[0]
         weapon_type = get_rarity.split(' ')[1]
 
         data_dict = dict(weapon_type=weapon_type, title=title, desc=description, lore=lore, date_added=date_added,
-                         collection=collection, found_in=found_in, rarity=rarity, wears=wears)
+                         collection=collection, found_in=found_in, rarity=rarity, wears=wears, wear_values=wear_values)
         item = WeaponSkin._from_data(data_dict)
 
         try:

@@ -36,12 +36,13 @@ class WeaponSkin(Item):
     CSGOStash Page: https://csgostash.com/skin/(id)/(name)
     """
     __slots__ = ('_spawned', 'weapon_type', 'title', 'description', 'lore', 'date_added', 'collection', 'collections',
-                 'found_in', 'rarity', 'wears', 'can_be_stattrak', 'can_be_souvenir', 'is_stattrak')
+                 'found_in', 'rarity', 'wears', 'wear_values', 'can_be_stattrak', 'can_be_souvenir', 'is_stattrak')
 
-    def __init__(self, weapon_type: str, title: str, desc: str, lore: str, date_added: str, collection: list, found_in: list, rarity: str, wears: dict):
+    def __init__(self, weapon_type: str, title: str, desc: str, lore: str, date_added: str, collection: list, found_in: list, rarity: str, wears: dict, wear_values: dict):
         super().__init__(title, desc, lore, date_added, collection, found_in, rarity)
         self.weapon_type = weapon_type
         self.wears = wears
+        self.wear_values = wear_values
         self.can_be_stattrak = False
         self.can_be_souvenir = False
 
@@ -128,8 +129,9 @@ class WeaponSkin(Item):
         found_in = d['found_in']
         rarity = d['rarity']
         wears = d['wears']
+        wear_values = d['wear_values']
 
         _cls = cls(weapon_type, title, description, lore, date_added,
-                   collection, found_in, rarity, wears)
+                   collection, found_in, rarity, wears, wear_values)
         _cls._spawned = False
         return _cls
