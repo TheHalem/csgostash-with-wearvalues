@@ -92,7 +92,7 @@ class ItemFactory(Factory):
         try:
             wear_values = ws.get_wear_values()
         except ItemHasNoWear:
-            wear_values = dict(vanilla=ws.get_image_url())
+            wear_values = dict(wear_values=[0.0, 1.0])
 
         get_rarity = ws.get_rarity()
         rarity = get_rarity.split(' ')[0]
